@@ -62,8 +62,65 @@ type KeycloakAPIRealm struct {
 
 	// Authenticator config
 	// +optional
-	AuthenticatorConfig []KeycloakAPIAuthenticatorConfig `json:"authenticatorConfig"`
+	AuthenticatorConfig []KeycloakAPIAuthenticatorConfig `json:"authenticatorConfig,omitempty"`
+
+	// Client scopes
+	// +optional
+	ClientScopes []KeycloakClientScope `json:"clientScopes,omitempty"`
+
+	// +optional
+	UserFederationMappers []KeycloakAPIUserFederationMapper `json:"userFederationMappers,omitempty"`
+
+	// Point keycloak to an external user provider to validate
+	// credentials or pull in identity information.
+	// +optional
+	UserFederationProviders []KeycloakAPIUserFederationProvider `json:"userFederationProviders,omitempty"`
 }
+
+// https://www.keycloak.org/docs-api/10.0/rest-api/index.html#_userfederationproviderrepresentation
+type KeycloakAPIUserFederationProvider struct {
+	//changedSyncPeriod optional integer(int32)
+
+	// +optional
+	Config map[string]string `json:"config,omitempty"`
+
+	// +optional
+	DisplayName string `json:"displayName,omitempty"`
+
+	// +optional
+	FullSyncPeriod *int32 `json:"fullSyncPeriod,omitempty"`
+
+	// +optional
+	ID string `json:"id,omitempty"`
+
+	// lastSync int32
+
+	// +optional
+	Priority *int32 `json:"priority,omitempty"`
+
+	// +optional
+	ProviderName string `json:"providerName,omitempty"`
+}
+
+// https://www.keycloak.org/docs-api/10.0/rest-api/index.html#_userfederationmapperrepresentation
+type KeycloakAPIUserFederationMapper struct {
+
+	// +optional
+	Config map[string]string `json:"config,omitempty"`
+
+	// +optional
+	Name string `json:"name,omitempty"`
+
+	// +optional
+	ID string `json:"id,omitempty"`
+
+	// +optional
+	FederationMapperType string `json:"federationMapperType,omitempty"`
+
+	// +optional
+	FederationProviderDisplayName string `json:"federationProviderDisplayName,omitempty"`
+}
+
 
 type KeycloakAPIAuthenticationFlow struct {
 	// Alias
@@ -255,6 +312,23 @@ type AuthenticationExecutionInfo struct {
 	// Authentication Execution Info Requirement Choices.
 	// +optional
 	RequirementChoices []string `json:"requirementChoices,omitempty"`
+}
+
+// https://www.keycloak.org/docs-api/10.0/rest-api/index.html#_clientscoperepresentation
+type KeycloakClientScope struct {
+	// +optional
+	Attributes map[string]string `json:"attributes,omitempty"`
+	// +optional
+	Description string `json:"description,omitempty"`
+	// +optional
+	ID string `json:"id,omitempty"`
+	// +optional
+	Name string `json:"name,omitempty"`
+	// +optional
+	Protocol string `json:"protocol,omitempty"`
+	// Protocol Mappers.
+	// +optional
+	ProtocolMappers []KeycloakProtocolMapper `json:"protocolMappers,omitempty"`
 }
 
 type TokenResponse struct {
